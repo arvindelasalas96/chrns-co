@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>chrns.co · checkout test</title>
+<style>
+  body{font-family:system-ui,sans-serif;max-width:420px;margin:40px auto;padding:0 16px;font-size:16px}
+  label{display:block;margin:14px 0 6px;font-weight:600}
+  input,select{width:100%;padding:14px;font-size:16px;border:1px solid #bbb;border-radius:10px}
+  button{width:100%;padding:18px;font-size:18px;font-weight:700;border:0;border-radius:12px;background:#111;color:#fff;margin-top:20px}
+  .pay{display:grid;gap:10px;margin-top:10px}
+  .pay label{display:flex;gap:10px;align-items:center;padding:14px;border:1px solid #bbb;border-radius:10px;font-weight:500;margin:0}
+  #msg{margin-top:16px;color:#b00}
+</style>
+</head>
+<body>
+<h1>Buy: Seiko SKX007</h1>
+<p>₱18,500 · Free shipping within the Philippines</p>
+<form id="f">
+  <input type="hidden" name="slug" value="seiko-skx007-example">
+  <label>Full name<input name="name" required autocomplete="name"></label>
+  <label>Mobile number<input name="phone" required type="tel" autocomplete="tel" placeholder="09xx xxx xxxx"></label>
+  <label>Email<input name="email" required type="email" autocomplete="email"></label>
+  <label>Address<input name="address" required autocomplete="street-address"></label>
+  <label>City<input name="city" required autocomplete="address-level2"></label>
+  <label>Country<select name="country"><option>Philippines</option><option>Singapore</option><option>Other</option></select></label>
+  <label>How do you want to pay?</label>
+  <div class="pay">
+    <label><input type="radio" name="method" value="online" checked> Pay online now (GCash, Maya, QR Ph, Card, Bank)</label>
+    <label><input type="radio" name="method" value="cod"> Cash on delivery (Cebu)</label>
+    <label><input type="radio" name="method" value="meetup"> Meet up (Cebu)</label>
+  </div>
+  <button id="btn">Continue</button>
+  <div id="msg"></div>
+</form>
+<script>
+const f=document.getElementById('f'),btn=document.getElementById('btn'),msg=document.getElementById('msg');
+f.addEventListener('submit',async e=>{
+  e.preventDefault();btn.disabled=true;btn.textContent='One moment…';msg.textContent='';
+  const body=Object.fromEntries(new FormData(f));
+  try{
+    const r=await fetch('/.netlify/functions/create-checkout',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify(body)});
+    const out=await r.json();
+    if(!r.ok)throw new Error(out.error||'Something went wrong');
+    if(out.url){location.href=out.url}else{location.href='/thank-you.html?order='+out.orderId+'&reserved=1'}
+  }catch(err){msg.textContent=err.message;btn.disabled=false;btn.textContent='Continue'}
+});
+</script>
+</body>
+</html>
