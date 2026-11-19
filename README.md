@@ -49,3 +49,19 @@ Decap CMS. Enable **Identity** and **Git Gateway** in Netlify > Site > Identity,
 
 - Payments: scaffold is wired but `payments_enabled` is `false` in Store Settings. The site shows **Reserve** instead of **Pay now** until PayMongo is approved.
 - Policies: placeholder text in `data/settings/policies.json`, editable in /admin.
+
+## Live
+
+- Production: https://chrns-co.netlify.app (Netlify site id `b82f6567-363a-444d-baf3-6e1d87b8b2c7`, team arvindelasalas96)
+- Deploys automatically from `main` on GitHub (`arvindelasalas96/chrns-co`). Build: `node build.mjs`, publish `public/`.
+- Design spec: `DESIGN.md`. Mockups: https://claude.ai/artifact/5rSsBbBMuTSnJNN6Xgf8o7
+
+## Still to switch on (in order)
+
+1. Netlify > Identity: enable, Invite only, enable Git Gateway, invite Arvin + Jafaith → `/admin` works.
+2. Gmail app password for chronos.cov1 → env `GMAIL_USER`, `GMAIL_APP_PASSWORD`, `ORDER_ALERT_TO`, `ORDER_ALERT_CC` → order emails fire.
+3. Apps Script for the contact form → paste URL into /admin > Store Settings > Contact form endpoint.
+4. Viber + WhatsApp numbers in /admin > Store Settings.
+5. PayMongo keys + webhook → flip `payments_enabled` in /admin. Buttons change from Reserve to Buy now.
+6. Real policies text in /admin > Policies (placeholders now).
+7. Domain chrns.co → Netlify > Domain management, then Resend for orders@chrns.co.
