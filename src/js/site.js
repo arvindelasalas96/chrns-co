@@ -62,7 +62,7 @@
     const lbl = cur.querySelector('.lbl');
     let x = innerWidth / 2, y = innerHeight / 2, tx = x, ty = y, raf;
     const loop = () => { x += (tx - x) * 0.22; y += (ty - y) * 0.22; cur.style.transform = `translate3d(${x}px,${y}px,0)`; raf = requestAnimationFrame(loop); };
-    addEventListener('pointermove', (e) => { tx = e.clientX; ty = e.clientY; if (!raf) loop(); }, { passive: true });
+    addEventListener('pointermove', (e) => { tx = e.clientX; ty = e.clientY; if (!raf) { x = tx; y = ty; loop(); } cur.classList.add('live'); }, { passive: true });
     addEventListener('pointerdown', () => cur.classList.add('press'));
     addEventListener('pointerup', () => cur.classList.remove('press'));
     document.addEventListener('mouseleave', () => cur.style.opacity = 0);

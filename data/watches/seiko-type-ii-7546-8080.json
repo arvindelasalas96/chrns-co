@@ -1,1 +1,45 @@
-{"slug":"seiko-type-ii-7546-8080","brand":"Seiko","model":"Type II Quartz","name":"1978 Seiko Type II Quartz 7546-8080, chocolate sunburst","ref":"7546-8080","price":14500,"sale_price":null,"currency":"PHP","condition":"Very good","condition_notes":"Dial and hands are clean. Light hairlines on the case back and clasp, see photos 3 and 5. Crystal has one small mark at 2 o'clock you'll only find if you look for it.\nKeeps time to within a few seconds a month.","box_papers":"Watch only","year":"1978","case_size_mm":36,"lug_to_lug_mm":41,"fits_up_to_cm":17,"dial_color":"Brown","strap":"Original Seiko bracelet","movement":"Quartz","gender":"Men","status":"available","added":"2026-11-18","images":["/images/watches/sample/1.jpg","/images/watches/sample/4.jpg","/images/watches/sample/1.jpg"],"video":"/videos/sample/3.mp4","wrist_video":"/videos/sample/3.mp4","hotspots":[{"photo":1,"x":46,"y":44,"note":"Light hairline on the bezel edge near 10 o'clock. Visible only at an angle."},{"photo":1,"x":70,"y":61,"note":"Day wheel is kanji / English. Prints crisp, no spotting."}],"vip_only":false}
+{
+ "slug": "seiko-type-ii-7546-8080",
+ "brand": "Seiko",
+ "model": "Type II Quartz",
+ "name": "1978 Seiko Type II Quartz 7546-8080, chocolate sunburst",
+ "ref": "7546-8080",
+ "price": 14500,
+ "sale_price": null,
+ "currency": "PHP",
+ "condition": "Very good",
+ "condition_notes": "Dial and hands are clean. Light hairlines on the case back and clasp, see photos 3 and 5. Crystal has one small mark at 2 o'clock you'll only find if you look for it.\nKeeps time to within a few seconds a month.",
+ "box_papers": "Watch only",
+ "year": "1978",
+ "case_size_mm": 36,
+ "lug_to_lug_mm": 41,
+ "fits_up_to_cm": 17,
+ "dial_color": "Brown",
+ "strap": "Original Seiko bracelet",
+ "movement": "Quartz",
+ "gender": "Men",
+ "status": "available",
+ "added": "2026-11-18",
+ "images": [
+  "/images/watches/sample/1.jpg",
+  "/images/watches/sample/4.jpg",
+  "/images/watches/sample/1.jpg"
+ ],
+ "video": null,
+ "wrist_video": null,
+ "hotspots": [
+  {
+   "photo": 1,
+   "x": 46,
+   "y": 44,
+   "note": "Light hairline on the bezel edge near 10 o'clock. Visible only at an angle."
+  },
+  {
+   "photo": 1,
+   "x": 70,
+   "y": 61,
+   "note": "Day wheel is kanji / English. Prints crisp, no spotting."
+  }
+ ],
+ "vip_only": false
+}

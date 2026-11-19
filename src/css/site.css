@@ -50,7 +50,7 @@ h1,h2,h3,p{margin:0}
 .menu .close{align-self:flex-end;width:44px;height:44px;display:flex;align-items:center;justify-content:center}
 
 /* hero tiles */
-.hero{display:flex;gap:8px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;padding-left:var(--gutter);padding-top:16px;cursor:grab}
+.hero{display:flex;gap:8px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-padding-left:var(--gutter);scrollbar-width:none;padding-left:var(--gutter);padding-top:16px;cursor:grab}
 .hero::-webkit-scrollbar{display:none}
 .hero.dragging{cursor:grabbing;scroll-snap-type:none}
 .hero .tile{flex:0 0 clamp(236px,27vw,420px);aspect-ratio:4/5;background:var(--bg-2);scroll-snap-align:start;position:relative;overflow:hidden}
@@ -58,14 +58,14 @@ h1,h2,h3,p{margin:0}
 .hero .tile:last-child{margin-right:var(--gutter)}
 
 /* filter bar */
-.filters{position:sticky;top:var(--header);z-index:30;display:flex;align-items:center;justify-content:space-between;gap:16px;padding-top:12px;padding-bottom:12px;background:var(--bg);border-bottom:1px solid transparent;transition:border-color .4s}
+.filters{position:sticky;position:-webkit-sticky;top:var(--header);z-index:30;display:flex;align-items:center;justify-content:space-between;gap:16px;padding-top:12px;padding-bottom:12px;background:var(--bg);border-bottom:1px solid transparent;transition:border-color .4s}
 .filters.is-stuck{border-bottom-color:var(--line)}
 .chips{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;flex:1;min-width:0}
 .chips::-webkit-scrollbar{display:none}
 .chip{flex:0 0 auto;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3);border:1px solid var(--line-2);padding:11px 14px;transition:color .3s,border-color .3s;white-space:nowrap}
 .chip:hover{color:var(--ink)}
 .chip[aria-pressed="true"]{color:var(--accent);border-color:var(--accent)}
-.sortbtn{display:inline-flex;align-items:center;gap:10px;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3);border:1px solid var(--line-2);padding:11px 14px;white-space:nowrap}
+.sortbtn{display:none;align-items:center;gap:10px;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3);border:1px solid var(--line-2);padding:11px 14px;white-space:nowrap}
 .sortbtn svg{transition:transform .3s}
 .sortbtn[aria-expanded="true"] svg{transform:rotate(180deg)}
 .sortmenu{position:absolute;right:var(--gutter);top:calc(100% + 8px);background:var(--bg-2);border:1px solid var(--line-2);min-width:220px;display:none;flex-direction:column;z-index:35}
@@ -73,8 +73,8 @@ h1,h2,h3,p{margin:0}
 .sortmenu button{text-align:left;padding:14px 18px;font-size:13px;color:var(--ink-2);border-bottom:1px solid var(--line)}
 .sortmenu button:last-child{border:0}
 .sortmenu button:hover,.sortmenu button[aria-checked="true"]{color:var(--ink-hi);background:var(--bg-3)}
-.mobile-filter{display:flex}
-@media (min-width:900px){.mobile-filter{display:none}}
+.mobile-filter{display:inline-flex}
+@media (min-width:900px){.mobile-filter{display:none}.sortbtn{display:inline-flex;align-items:center}}
 
 /* grid + cards */
 .grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px 6px;padding-top:20px}
@@ -286,10 +286,11 @@ body.has-mobilebar .fab{bottom:calc(92px + env(safe-area-inset-bottom))}
 /* custom cursor */
 @media (hover:hover) and (pointer:fine){
   body.cursor-on,body.cursor-on a,body.cursor-on button,body.cursor-on label,body.cursor-on input,body.cursor-on select{cursor:none}
-  .cur{position:fixed;left:0;top:0;z-index:9999;pointer-events:none;width:28px;height:28px;margin:-14px 0 0 -14px;border-radius:50%;border:1.5px solid rgba(217,205,176,.9);transition:width .35s var(--ease),height .35s var(--ease),margin .35s var(--ease),border-color .3s,background .3s;will-change:transform;mix-blend-mode:difference}
+  .cur{position:fixed;left:0;top:0;z-index:9999;pointer-events:none;opacity:0;width:28px;height:28px;margin:-14px 0 0 -14px;border-radius:50%;border:1.5px solid rgba(217,205,176,.9);transition:width .35s var(--ease),height .35s var(--ease),margin .35s var(--ease),border-color .3s,background .3s;will-change:transform;mix-blend-mode:difference}
   .cur::before{content:"";position:absolute;left:50%;top:50%;width:1.5px;height:38%;background:rgba(217,205,176,.95);transform-origin:50% 100%;transform:translate(-50%,-100%) rotate(0deg);animation:tick 60s steps(60) infinite}
   .cur::after{content:"";position:absolute;left:50%;top:50%;width:3px;height:3px;border-radius:50%;background:rgba(217,205,176,.95);transform:translate(-50%,-50%)}
   .cur .crown{position:absolute;right:-4px;top:50%;width:4px;height:6px;margin-top:-3px;background:rgba(217,205,176,.9);border-radius:1px}
+  .cur.live{opacity:1}
   .cur.hover{width:48px;height:48px;margin:-24px 0 0 -24px;border-color:rgba(217,205,176,1)}
   .cur.press{width:22px;height:22px;margin:-11px 0 0 -11px}
   .cur.media{width:72px;height:72px;margin:-36px 0 0 -36px;background:rgba(10,10,10,.35);backdrop-filter:blur(2px);mix-blend-mode:normal}

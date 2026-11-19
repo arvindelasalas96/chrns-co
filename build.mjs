@@ -124,15 +124,15 @@ const home = layout({
 </section>
 
 <section id="shop" class="gutter" style="padding-top:40px">
-  <div class="filters" style="position:relative">
+  <div class="filters">
     <div class="chips" role="group" aria-label="Quick filters">
       <button class="chip" data-quick="all" aria-pressed="true">All · <span data-count>${avail.length}</span></button>
       ${brands.map((b) => `<button class="chip" data-quick="brand:${esc(b)}" aria-pressed="false">${esc(b)} · ${count((w) => w.brand === b && w.status !== "sold")}</button>`).join("")}
       <button class="chip" data-quick="under15" aria-pressed="false">Under ₱15K</button>
       ${incls.includes("Full set") ? '<button class="chip" data-quick="fullset" aria-pressed="false">Full set</button>' : ""}
     </div>
-    <button class="sortbtn" aria-expanded="false" aria-haspopup="menu" style="display:none"><span>Sort · <span class="cur-sort">Newest</span></span>${ICON.chev}</button>
-    <button class="chip mobile-filter" style="display:inline-flex;gap:10px;align-items:center">${ICON.filter} Filter &amp; sort<span data-active></span></button>
+    <button class="sortbtn" aria-expanded="false" aria-haspopup="menu"><span>Sort · <span class="cur-sort">Newest</span></span>${ICON.chev}</button>
+    <button class="chip mobile-filter" style="gap:10px;align-items:center">${ICON.filter} Filter &amp; sort<span data-active></span></button>
     <div class="sortmenu" role="menu">
       ${Object.entries({ new: "Newest first", old: "Oldest first", lo: "Price, low to high", hi: "Price, high to low", az: "Name, A to Z", za: "Name, Z to A" }).map(([k, v]) => `<button role="menuitemradio" data-sort="${k}" aria-checked="${k === "new"}">${v}</button>`).join("")}
     </div>
