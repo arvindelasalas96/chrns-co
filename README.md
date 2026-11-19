@@ -34,3 +34,18 @@ Orders = Netlify Blobs. Emails = store Gmail (swap to Resend once the domain is 
 Phase 1: edit `data/watches/<slug>.json`, push. Phase 2: `/admin` (Decap CMS) does the same from a form.
 
 Status values: `available` · `reserved` · `sold` · `hidden`
+
+## Contact form (Google Apps Script)
+
+1. Log in to script.google.com as chronos.cov1@gmail.com → New project → paste `scripts/contact-form.gs`.
+2. Deploy → New deployment → Web app → Execute as **Me**, Who has access **Anyone** → Deploy → copy the URL.
+3. Paste it into `public/contact.html` as `FORM_ENDPOINT`. Every submission emails the store + Jafaith, cc Arvin, and logs to a sheet if you bind one.
+
+## Admin portal (`/admin`)
+
+Decap CMS. Enable **Identity** and **Git Gateway** in Netlify > Site > Identity, set registration to Invite only, invite Jafaith and Arvin by email. Collections: Watches (add/edit/mark sold, sale price, VIP flag, condition hotspots), Discounts & Promos (codes), Store Settings (contact numbers, announcement bar, payments on/off, VIP code, policy text).
+
+## Placeholders (to finish later)
+
+- Payments: scaffold is wired but `payments_enabled` is `false` in Store Settings. The site shows **Reserve** instead of **Pay now** until PayMongo is approved.
+- Policies: placeholder text in `data/settings/policies.json`, editable in /admin.

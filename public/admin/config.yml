@@ -1,0 +1,95 @@
+# chrns.co admin. Jafaith logs in with email + password (Netlify Identity).
+# Every save commits to GitHub and redeploys the site.
+backend:
+  name: git-gateway
+  branch: main
+  commit_messages:
+    create: "admin: add {{slug}}"
+    update: "admin: update {{slug}}"
+    delete: "admin: remove {{slug}}"
+
+media_folder: "public/images/watches"
+public_folder: "/images/watches"
+site_url: https://chrns-co.netlify.app
+logo_url: /images/logo.png
+
+collections:
+  - name: watches
+    label: "Watches"
+    label_singular: "Watch"
+    folder: "data/watches"
+    extension: json
+    format: json
+    create: true
+    slug: "{{brand}}-{{model}}-{{year}}"
+    summary: "{{brand}} {{model}} · ₱{{price}} · {{status}}"
+    sortable_fields: [added, price, brand, status]
+    view_filters:
+      - { label: "Available", field: status, pattern: "available" }
+      - { label: "Sold", field: status, pattern: "sold" }
+    fields:
+      - { name: status, label: "Status", widget: select, options: [available, reserved, sold, hidden], default: available }
+      - { name: brand, label: "Brand", widget: string }
+      - { name: model, label: "Model", widget: string }
+      - { name: ref, label: "Reference no.", widget: string, required: false }
+      - { name: price, label: "Price (₱)", widget: number, value_type: int, min: 0 }
+      - { name: sale_price, label: "Sale price (₱, leave blank if none)", widget: number, value_type: int, required: false }
+      - { name: condition, label: "Condition", widget: select, options: [Mint, Excellent, Very good, Good, Fair] }
+      - { name: condition_notes, label: "Condition notes (plain words, be honest)", widget: text }
+      - { name: box_papers, label: "Box & papers", widget: select, options: [Full set, Box only, Papers only, Watch only] }
+      - { name: year, label: "Year", widget: string, required: false }
+      - { name: case_size_mm, label: "Case size (mm)", widget: number, value_type: int }
+      - { name: dial_color, label: "Dial color", widget: select, options: [Black, White, Blue, Green, Silver, Grey, Gold, Brown, Champagne, Other] }
+      - { name: strap, label: "Strap / bracelet", widget: string }
+      - { name: movement, label: "Movement", widget: select, options: [Automatic, Quartz, Manual, Solar, Kinetic] }
+      - { name: gender, label: "For", widget: select, options: [Men, Women, Unisex], default: Men }
+      - { name: images, label: "Photos (first one is the cover, add a wrist shot)", widget: list, field: { name: image, label: Image, widget: image } }
+      - { name: hotspots, label: "Condition hotspots (optional)", widget: list, required: false,
+          fields: [
+            { name: photo, label: "Photo number (1 = cover)", widget: number, value_type: int },
+            { name: x, label: "X %", widget: number, value_type: int, min: 0, max: 100 },
+            { name: y, label: "Y %", widget: number, value_type: int, min: 0, max: 100 },
+            { name: note, label: "Note", widget: string } ] }
+      - { name: vip_only, label: "VIP early access (hide from public for 48h)", widget: boolean, default: false }
+      - { name: added, label: "Date added", widget: datetime, format: "YYYY-MM-DD", date_format: "YYYY-MM-DD", time_format: false }
+      - { name: slug, label: "URL slug (auto)", widget: string, required: false }
+
+  - name: discounts
+    label: "Discounts & Promos"
+    folder: "data/discounts"
+    extension: json
+    format: json
+    create: true
+    slug: "{{code}}"
+    summary: "{{code}} · {{type}} {{value}} · {{active}}"
+    fields:
+      - { name: code, label: "Code (what the buyer types)", widget: string, pattern: ["^[A-Z0-9]+$", "Caps and numbers only"] }
+      - { name: type, label: "Type", widget: select, options: [percent, fixed] }
+      - { name: value, label: "Value (10 = 10% or ₱10)", widget: number, value_type: int }
+      - { name: min_spend, label: "Minimum spend (₱)", widget: number, value_type: int, default: 0 }
+      - { name: active, label: "Active", widget: boolean, default: true }
+      - { name: expires, label: "Expires", widget: datetime, required: false, format: "YYYY-MM-DD", time_format: false }
+      - { name: note, label: "Internal note", widget: string, required: false }
+
+  - name: settings
+    label: "Store Settings"
+    files:
+      - name: store
+        label: "Store"
+        file: "data/settings/store.json"
+        fields:
+          - { name: announcement, label: "Top bar announcement", widget: string, required: false }
+          - { name: viber, label: "Viber number", widget: string }
+          - { name: whatsapp, label: "WhatsApp number", widget: string }
+          - { name: email, label: "Public email", widget: string }
+          - { name: meetup_areas, label: "Meetup / COD areas", widget: string, default: "Cebu City" }
+          - { name: payments_enabled, label: "Online payments live (off = Reserve only)", widget: boolean, default: false }
+          - { name: vip_code, label: "VIP access code", widget: string, required: false }
+      - name: policies
+        label: "Policies"
+        file: "data/settings/policies.json"
+        fields:
+          - { name: terms, label: "Terms", widget: markdown }
+          - { name: returns, label: "Returns & 7-day guarantee", widget: markdown }
+          - { name: shipping, label: "Shipping", widget: markdown }
+          - { name: privacy, label: "Privacy", widget: markdown }

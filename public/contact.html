@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Contact · chrns.co</title>
+<style>
+  body{font-family:system-ui,sans-serif;max-width:420px;margin:40px auto;padding:0 16px;font-size:16px}
+  label{display:block;margin:14px 0 6px;font-weight:600}
+  input,select,textarea{width:100%;padding:14px;font-size:16px;border:1px solid #bbb;border-radius:10px;box-sizing:border-box}
+  button{width:100%;padding:18px;font-size:18px;font-weight:700;border:0;border-radius:12px;background:#111;color:#fff;margin-top:20px}
+  .ok{color:#0a7}.err{color:#b00}
+</style>
+</head>
+<body>
+<h1>Message us</h1>
+<p>We reply within the day. Faster on Viber or WhatsApp.</p>
+<form id="cf">
+  <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off">
+  <label>Your name<input name="name" required autocomplete="name"></label>
+  <label>Mobile number<input name="phone" type="tel" required autocomplete="tel"></label>
+  <label>Email (optional)<input name="email" type="email" autocomplete="email"></label>
+  <label>What's it about?
+    <select name="topic">
+      <option>Ask about a watch</option><option>Book a meetup / viewing</option>
+      <option>Sell or trade my watch</option><option>Order help</option><option>Other</option>
+    </select></label>
+  <label>Watch (optional)<input name="watch" placeholder="e.g. Seiko SKX007"></label>
+  <label>Message<textarea name="message" rows="4" required></textarea></label>
+  <button id="send">Send</button>
+  <p id="out"></p>
+</form>
+<script>
+// Paste the Apps Script web app URL here after deploying scripts/contact-form.gs
+const FORM_ENDPOINT = "PASTE_APPS_SCRIPT_URL_HERE";
+const f=document.getElementById('cf'),btn=document.getElementById('send'),out=document.getElementById('out');
+f.addEventListener('submit',async e=>{
+  e.preventDefault();btn.disabled=true;btn.textContent='Sending…';out.textContent='';
+  try{
+    const r=await fetch(FORM_ENDPOINT,{method:'POST',body:new FormData(f)});
+    const j=await r.json();
+    if(!j.ok)throw new Error(j.error||'Please try again');
+    out.className='ok';out.textContent='Sent. We will get back to you shortly.';f.reset();
+  }catch(err){out.className='err';out.textContent=err.message}
+  btn.disabled=false;btn.textContent='Send';
+});
+</script>
+</body>
+</html>
