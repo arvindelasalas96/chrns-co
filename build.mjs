@@ -1,6 +1,7 @@
 // chrns.co static build. `node build.mjs` → public/
 import { readFile, readdir, writeFile, mkdir, cp } from "node:fs/promises";
 import path from "node:path";
+import { createHash } from "node:crypto";
 
 const OUT = "public";
 const read = async (p) => JSON.parse(await readFile(p, "utf8"));
@@ -20,6 +21,9 @@ const sold = watches.filter((w) => w.status === "sold");
 const brands = [...new Set(watches.map((w) => w.brand))].sort();
 const count = (f) => watches.filter(f).length;
 const ago = (d) => { const days = Math.round((Date.now() - new Date(d)) / 864e5); return days < 1 ? "Today" : days < 7 ? `${days} day${days > 1 ? "s" : ""} ago` : days < 30 ? `${Math.round(days / 7)} week${days >= 14 ? "s" : ""} ago` : "A while ago"; };
+const ver = async (f) => createHash("md5").update(await readFile(f)).digest("hex").slice(0, 8);
+const V = { css: await ver("src/css/site.css") };
+for (const f of await readdir("src/js")) V[f] = await ver(`src/js/${f}`);
 const SITE = process.env.URL || process.env.SITE_URL || "https://chrns-co.netlify.app";
 
 const ICON = {
@@ -52,7 +56,7 @@ ${noindex ? '<meta name="robots" content="noindex">' : ""}
 <link rel="icon" href="/images/logo.png">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@300;400;500&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/assets/site.css">
+<link rel="stylesheet" href="/assets/site.css?v=${V.css}">
 ${jsonld ? `<script type="application/ld+json">${JSON.stringify(jsonld)}</script>` : ""}
 </head>
 <body>
@@ -79,8 +83,8 @@ ${store.announcement ? `<div class="announce">${esc(store.announcement)}</div>` 
   <span style="align-self:flex-end">© ${new Date().getFullYear()} CHRNS</span>
 </footer>
 <a class="fab" href="${msgHref}" aria-label="Message us">${ICON.chat}</a>
-<script src="/assets/site.js" defer></script>
-${scripts.map((s) => `<script src="/assets/${s}" defer></script>`).join("\n")}
+<script src="/assets/site.js?v=${V["site.js"]}" defer></script>
+${scripts.map((s) => `<script src="/assets/${s}?v=${V[s]}" defer></script>`).join("\n")}
 </body>
 </html>`;
 }

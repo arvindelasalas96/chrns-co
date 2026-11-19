@@ -23,7 +23,7 @@
     live.forEach((w, i) => { w.el.style.order = i; w.el.hidden = false; w.el.dataset.i = i; w.el.classList.add('in'); });
     data.forEach((w) => { if (!seen.has(w)) w.el.hidden = true; });
     $('#empty').hidden = live.length > 0;
-    $$('[data-count]').forEach((n) => n.textContent = live.length);
+    $$('[data-count]').forEach((n) => n.textContent = live.filter((w) => !w.sold).length);
     $$('.sortbtn .cur-sort').forEach((n) => n.textContent = labels[state.sort]);
     $$('[data-sort]').forEach((b) => b.setAttribute('aria-checked', b.dataset.sort === state.sort));
     const active = state.brand.size + state.dial.size + state.price.size + state.incl.size;
