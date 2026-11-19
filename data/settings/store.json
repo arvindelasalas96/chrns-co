@@ -5,5 +5,6 @@
   "email": "chronos.cov1@gmail.com",
   "meetup_areas": "Cebu City",
   "payments_enabled": false,
-  "vip_code": ""
+  "vip_code": "",
+  "contact_endpoint": ""
 }

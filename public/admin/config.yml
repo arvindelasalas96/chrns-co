@@ -21,7 +21,7 @@ collections:
     extension: json
     format: json
     create: true
-    slug: "{{brand}}-{{model}}-{{year}}"
+    slug: "{{slug}}"
     summary: "{{brand}} {{model}} · ₱{{price}} · {{status}}"
     sortable_fields: [added, price, brand, status]
     view_filters:
@@ -52,7 +52,13 @@ collections:
             { name: note, label: "Note", widget: string } ] }
       - { name: vip_only, label: "VIP early access (hide from public for 48h)", widget: boolean, default: false }
       - { name: added, label: "Date added", widget: datetime, format: "YYYY-MM-DD", date_format: "YYYY-MM-DD", time_format: false }
-      - { name: slug, label: "URL slug (auto)", widget: string, required: false }
+      - { name: slug, label: "URL slug (lowercase-with-dashes, e.g. seiko-type-ii-7546)", widget: string, pattern: ["^[a-z0-9-]+$", "lowercase letters, numbers and dashes only"] }
+      - { name: name, label: "Listing title (e.g. 1978 Seiko Type II Quartz 7546-8080, chocolate sunburst)", widget: string }
+      - { name: video, label: "Product video (mp4, vertical, under 10s)", widget: file, required: false }
+      - { name: wrist_video, label: "On-wrist video (mp4)", widget: file, required: false }
+      - { name: lug_to_lug_mm, label: "Lug to lug (mm)", widget: number, value_type: int, required: false }
+      - { name: fits_up_to_cm, label: "Bracelet fits up to (cm)", widget: number, value_type: float, required: false }
+      - { name: sold_at, label: "Sold on", widget: datetime, required: false, format: "YYYY-MM-DD", time_format: false }
 
   - name: discounts
     label: "Discounts & Promos"
@@ -85,6 +91,7 @@ collections:
           - { name: meetup_areas, label: "Meetup / COD areas", widget: string, default: "Cebu City" }
           - { name: payments_enabled, label: "Online payments live (off = Reserve only)", widget: boolean, default: false }
           - { name: vip_code, label: "VIP access code", widget: string, required: false }
+          - { name: contact_endpoint, label: "Contact form endpoint (Apps Script URL)", widget: string, required: false }
       - name: policies
         label: "Policies"
         file: "data/settings/policies.json"
